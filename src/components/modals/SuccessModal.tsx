@@ -7,7 +7,6 @@ interface SuccessModalProps {
   open: boolean;
   message: string;
   buttonActions: JSX.Element;
-  modalImage?: string;
 }
 
 const SuccessModal: React.FC<SuccessModalProps> = ({
@@ -36,11 +35,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
             <h1 className="text-xl verdanaFont text-center darkCharcoal">
               SUCCESS!
             </h1>
-            <h3 className="robotoFont text-sm m-6 text-gray-500">
-              {message}
-              {/* Your exercise template has been saved successfully. You can now
-              re-use this template to log your exercises next time! */}
-            </h3>
+            <h3 className="robotoFont text-sm m-6 text-gray-500">{message}</h3>
           </div>
           <div className="mt-2 flex flex-col gap-4 px-4 items-center">
             {buttonActions}
