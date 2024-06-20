@@ -288,7 +288,28 @@ export default function CreateTemplate() {
           </motion.div>
         </>
       </LayoutGroup>
-      <SuccessModal open={isModalOpen} />
+      <SuccessModal
+        open={isModalOpen}
+        message="Your exercise template has been saved successfully. You can now
+              re-use this template to log your exercises next time!"
+        buttonActions={
+          <>
+            <Link href={"/user/home"}>
+              <BasicRoundedButton
+                label="Return To Home"
+                buttonClassNames="whiteButton"
+              />
+              ,
+            </Link>
+            <Link href={"/user/mytemplates"}>
+              <BasicRoundedButton
+                label="View Templates"
+                buttonClassNames="defaultButtonColor"
+              />
+            </Link>
+          </>
+        }
+      />
     </motion.div>
   );
 }

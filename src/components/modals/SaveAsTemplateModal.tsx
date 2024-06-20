@@ -5,6 +5,7 @@ import { ExercisesDictionary } from "@/lib/exercises/exercises-dictionary";
 import { ExerciseActivity } from "@/models/exercise-activity.model";
 import { CircularProgress, Modal } from "@mui/material";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import { BasicRoundedButton } from "../buttons/basic-rounded-button/Basic-rounded-button";
@@ -176,7 +177,27 @@ const SaveAsTemplateModal: React.FC<SaveAsTemplateModalProps> = ({
           </motion.div>
         </motion.div>
       </Modal>
-      <SuccessModal open={isModalOpen} />
+      <SuccessModal
+        open={isModalOpen}
+        message="Your exercise template has been saved successfully. You can now re-use this template to log your exercises next time!"
+        buttonActions={
+          <>
+            <Link href={"/user/home"}>
+              <BasicRoundedButton
+                label="Return To Home"
+                buttonClassNames="whiteButton"
+              />
+              ,
+            </Link>
+            <Link href={"/user/mytemplates"}>
+              <BasicRoundedButton
+                label="View Templates"
+                buttonClassNames="defaultButtonColor"
+              />
+            </Link>
+          </>
+        }
+      />
     </div>
   );
 };
