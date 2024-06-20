@@ -34,12 +34,19 @@ export const authOptions: NextAuthOptions = {
 
       return true;
     },
-    async jwt({ token }) {
+    async jwt({ token, trigger }) {
       await dbConnect();
 
       const userSession = await UserRepository.findOne({
         email: token.email,
       }).select("-password");
+
+      if (trigger === "update") {
+        token = {
+          ...token,
+          username: userSession?.username,
+        };
+      }
 
       // We can decide what element we want to include in the token
       token = {
