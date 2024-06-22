@@ -1,4 +1,5 @@
 "use client";
+import { ExercisesClient } from "@/app/clients/exercises-client/exercises-client";
 import { BasicRoundedButton } from "@/components/buttons/basic-rounded-button/Basic-rounded-button";
 import { CalendarLogViewer } from "@/components/calendar-log-viewer/Calendar-log-viewer";
 import { useAuthSession } from "@/lib/contexts/auth-context/auth-context";
@@ -7,7 +8,7 @@ import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LandingPage() {
   const { status, session } = useAuthSession();
@@ -18,6 +19,20 @@ export default function LandingPage() {
     useState<boolean>(false);
   const [isPageLoadingStartViewLogs, setIsPageLoadingViewLogs] =
     useState<boolean>(false);
+  const [exerciseTally, setExerciseTally] = useState<Record<
+    string,
+    number
+  > | null>(null);
+
+  useEffect(() => {
+    fetchFavoriteExerciseByCount();
+  }, []);
+
+  const fetchFavoriteExerciseByCount = async () => {
+    const response = await ExercisesClient.getBasicTally();
+    console.log(response.data);
+    setExerciseTally(response.data);
+  };
 
   // Users who are not authenticated will be redirected to the sign in page.
   if (status === "unauthenticated") {
