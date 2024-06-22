@@ -3,13 +3,16 @@ import ProfileIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import { AppBar, Divider, Drawer, IconButton, Toolbar } from "@mui/material";
+
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import packageJsonInfo from "../../../package.json";
 import { AppNameTextLogo } from "../App-name-text-logo/App-name-text-logo";
 export function AppMenuBar() {
   const [open, setOpen] = useState<boolean>(false);
   const toggleDrawer = (newOpen: boolean) => setOpen(newOpen);
+
   return (
     <div className="grow">
       <AppBar position="static" className="defaultButtonColor">
@@ -34,6 +37,14 @@ export function AppMenuBar() {
         >
           <div className="flex justify-center mt-4 p-4">
             <AppNameTextLogo customClasses="text-2xl" />
+          </div>
+          <div>
+            <p
+              className="verdanaFont text-center"
+              style={{ color: "var(--orange)" }}
+            >
+              v.{packageJsonInfo.version}
+            </p>
           </div>
           <Divider sx={{ background: "#143452", mt: 2 }} />
           <div className="flex flex-col gap-y-5 mt-2">
