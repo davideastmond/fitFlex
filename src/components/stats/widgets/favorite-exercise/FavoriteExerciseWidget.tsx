@@ -1,7 +1,7 @@
 import { ExerciseEnum } from "@/lib/exercises/exercise-enum";
 import { ExercisesDictionary } from "@/lib/exercises/exercises-dictionary";
-import { BarChart } from "@mui/x-charts";
 import { useRef } from "react";
+import BaseWidgetBarChart from "../base-widget-bar-chart/BaseWidgetBarChart";
 
 type ExerciseCountData = Record<ExerciseEnum | string, number>;
 
@@ -33,43 +33,9 @@ export function FavoriteExerciseWidget({ data }: FavoriteExerciseWidgetProps) {
         </div>
         <div className="w-48 h-40">
           {/* Bar chart goes here */}
-          <BarChart
-            tooltip={{ trigger: "none" }}
-            sx={{
-              "& .MuiChartsAxis-directionY": {
-                display: "none",
-              },
-              "& .MuiChartsAxis-directionX": {
-                display: "none",
-              },
-              "&& .MuiBarElement-root": {
-                rx: 5,
-                width: "7px !important",
-              },
-              paddingBottom: "12px",
-            }}
-            xAxis={[
-              {
-                scaleType: "band",
-                data: dataRef.current.map(([e, count]) => count),
-                disableTicks: true,
-                colorMap: {
-                  type: "continuous",
-                  max: 5,
-                  color: ["green", "orange"],
-                },
-              },
-            ]}
-            yAxis={[
-              {
-                disableTicks: true,
-              },
-            ]}
-            series={[
-              {
-                data: dataRef.current.map(([, count]) => count),
-              },
-            ]}
+          <BaseWidgetBarChart
+            xAxisData={dataRef.current.map(([e, count]) => count)}
+            seriesData={dataRef.current.map(([e, count]) => count)}
           />
         </div>
       </div>
