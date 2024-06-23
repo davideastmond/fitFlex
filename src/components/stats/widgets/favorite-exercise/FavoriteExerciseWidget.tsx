@@ -2,6 +2,7 @@ import { ExerciseEnum } from "@/lib/exercises/exercise-enum";
 import { ExercisesDictionary } from "@/lib/exercises/exercises-dictionary";
 import { useRef } from "react";
 import BaseWidgetBarChart from "../base-widget-bar-chart/BaseWidgetBarChart";
+import BaseWidget from "../base-widget/BaseWidget";
 
 type ExerciseCountData = Record<ExerciseEnum | string, number>;
 
@@ -12,34 +13,15 @@ interface FavoriteExerciseWidgetProps {
 export function FavoriteExerciseWidget({ data }: FavoriteExerciseWidgetProps) {
   const dataRef = useRef(getTopFiveExercises(data));
   return (
-    <div
-      className="blueGray"
-      style={{
-        height: "180px",
-        width: "175px",
-        borderRadius: "20px",
-      }}
+    <BaseWidget
+      title="Favorite Exercise"
+      subtitle={calculateFavoriteExercise(data)}
     >
-      <div>
-        <div className="pt-2">
-          <h1 className="robotoFont text-base font-bold text-center text-white">
-            Favorite Exercise
-          </h1>
-          <div className="mt-2">
-            <h2 className="verdanaFont text-2xl font-bold text-center text-white">
-              {calculateFavoriteExercise(data)}
-            </h2>
-          </div>
-        </div>
-        <div className="w-48 h-40">
-          {/* Bar chart goes here */}
-          <BaseWidgetBarChart
-            xAxisData={dataRef.current.map(([e, count]) => count)}
-            seriesData={dataRef.current.map(([e, count]) => count)}
-          />
-        </div>
-      </div>
-    </div>
+      <BaseWidgetBarChart
+        xAxisData={dataRef.current.map(([e, count]) => count)}
+        seriesData={dataRef.current.map(([e, count]) => count)}
+      />
+    </BaseWidget>
   );
 }
 
