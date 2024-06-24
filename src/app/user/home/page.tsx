@@ -59,13 +59,13 @@ export default function LandingPage() {
       >
         <div className="flex gap-4">
           <h1
-            className={`text-xl leading-7 openSansFont font-bold uppercase self-center py-6`}
+            className={`text-xl leading-7 openSansFont font-bold uppercase self-center py-6 px-2`}
           >
             Welcome, {session?.user?.username}
           </h1>
           <Link
             href="/user/mytemplates"
-            className="self-center "
+            className="self-center pr-2"
             onClick={() => setIsPageLoadingTemplates(true)}
           >
             <BasicRoundedButton
@@ -91,7 +91,7 @@ export default function LandingPage() {
         </div>
 
         <div>
-          <h3 className="verdanaFont text-sm leading-4">
+          <h3 className="verdanaFont text-sm leading-4 px-2">
             {dayjs().format("ddd, MMMM D, YYYY")}
           </h3>
         </div>
