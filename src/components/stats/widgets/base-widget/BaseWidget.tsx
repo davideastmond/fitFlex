@@ -23,14 +23,26 @@ export default function BaseWidget({
           <h1 className="robotoFont text-base font-bold text-center text-white">
             {title}
           </h1>
-          <div className="mt-2">
-            <h2 className="verdanaFont text-2xl font-bold text-center text-white">
+          <div>
+            <h2
+              className={`verdanaFont min-h-12 max-h-12 ${getResponsiveSubtitleFontSize(
+                subtitle
+              )} font-bold text-center text-white`}
+            >
               {subtitle}
             </h2>
           </div>
         </div>
-        <div className="w-48 h-40">{children}</div>
+        <div>{children}</div>
       </div>
     </div>
   );
 }
+
+const getResponsiveSubtitleFontSize = (subtitle: string) => {
+  if (subtitle.length <= 10) {
+    return "text-2xl";
+  }
+
+  return "text-md";
+};

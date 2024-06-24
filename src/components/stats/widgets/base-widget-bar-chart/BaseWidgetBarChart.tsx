@@ -10,6 +10,7 @@ export default function BaseWidgetBarChart({
   xAxisData,
   seriesData,
 }: BaseWidgetBarChartProps) {
+  if (seriesData.length === 0) return null;
   return (
     <BarChart
       tooltip={{ trigger: "none" }}
@@ -24,7 +25,9 @@ export default function BaseWidgetBarChart({
           rx: 5,
           width: "7px !important",
         },
-        paddingBottom: "12px",
+        position: "relative",
+
+        top: "-30px",
       }}
       yAxis={[
         {
