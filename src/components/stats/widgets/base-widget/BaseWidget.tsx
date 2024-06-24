@@ -33,7 +33,7 @@ export default function BaseWidget({
             </h2>
           </div>
         </div>
-        <div>{children}</div>
+        <div className="barchart-section">{children}</div>
       </div>
     </div>
   );
@@ -44,5 +44,5 @@ const getResponsiveSubtitleFontSize = (subtitle: string) => {
     return "text-2xl";
   }
 
-  return "text-md";
+  return "text-sm";
 };

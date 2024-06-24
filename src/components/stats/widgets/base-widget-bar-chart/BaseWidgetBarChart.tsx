@@ -14,6 +14,7 @@ export default function BaseWidgetBarChart({
   return (
     <BarChart
       tooltip={{ trigger: "none" }}
+      height={150}
       sx={{
         "& .MuiChartsAxis-directionY": {
           display: "none",
@@ -26,8 +27,7 @@ export default function BaseWidgetBarChart({
           width: "7px !important",
         },
         position: "relative",
-
-        top: "-30px",
+        top: "-35px",
       }}
       yAxis={[
         {
