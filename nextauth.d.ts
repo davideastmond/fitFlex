@@ -5,6 +5,7 @@ import { DefaultUser } from "next-auth";
 declare module "next-auth" {
   interface User extends Partial<FitnessUser> {
     _id?: string;
+    oAuth?: boolean;
   }
 
   interface Session {
