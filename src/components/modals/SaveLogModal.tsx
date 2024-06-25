@@ -52,7 +52,10 @@ const SaveLogModal: React.FC<SaveLogModalProps> = ({ open, onClose, data }) => {
             </div>
             <div className="flex flex-col justify-between items-center">
               <BasicRoundedButton
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => {
+                  setIsModalOpen(true);
+                  onClose();
+                }}
                 label="Save Log as Template"
                 buttonClassNames="defaultButtonColor"
               />

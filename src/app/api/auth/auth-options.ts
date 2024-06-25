@@ -53,6 +53,7 @@ export const authOptions: NextAuthOptions = {
         ...token,
         _id: userSession?._id.toString(),
         username: userSession?.username,
+        oAuth: userSession?.oAuth,
       };
 
       return token;
@@ -64,6 +65,7 @@ export const authOptions: NextAuthOptions = {
           username: token.username as string,
           email: token.email as string,
           _id: token._id as string,
+          oAuth: token.oAuth as boolean,
         } as any,
       };
 
@@ -107,6 +109,7 @@ export const authOptions: NextAuthOptions = {
             _id: user._id.toString(),
             email: user.email,
             username: user.username,
+            oAuth: user.oAuth,
           } as any;
         } else {
           console.log("Invalid Password");

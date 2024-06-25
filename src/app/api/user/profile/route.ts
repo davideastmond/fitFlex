@@ -1,5 +1,6 @@
 import { profileUpdateValidator } from "@/app/validators/user/profile/profile-update-validator";
 import { UserRepository } from "@/schemas/user.schema";
+import bcrypt from "bcrypt";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import authOptions from "../../auth/auth-options";
@@ -18,11 +19,19 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json(e, { status: 400 });
   }
 
-  const { username } = requestBody;
+  const { username, password } = requestBody;
   const user = await UserRepository.findById(session.user?._id);
 
   if (user) {
-    user.username = username;
+    if (username) {
+      user.username = username;
+    }
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+    }
+
     await user.save();
     return NextResponse.json(
       { message: "Profile updated successfully" },
