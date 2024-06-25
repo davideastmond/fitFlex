@@ -97,7 +97,7 @@ export default function LandingPage() {
         </div>
       </motion.div>
       {popularExerciseBySetsData && (
-        <div>
+        <div className="mt-4 mb-4">
           <FavoriteExerciseBySetsWidget data={popularExerciseBySetsData} />
         </div>
       )}
