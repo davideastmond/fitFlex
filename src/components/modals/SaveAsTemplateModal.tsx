@@ -149,7 +149,9 @@ const SaveAsTemplateModal: React.FC<SaveAsTemplateModalProps> = ({
                   >
                     <div className="flex justify-between items-center mb-1 defaultButtonColor p-2">
                       <p className="text-white verdanaFont">
-                        {exercise.exerciseName}
+                        {ExercisesDictionary[
+                          exercise.exerciseName as ExerciseEnum
+                        ].label || exercise.exerciseName}
                       </p>
                     </div>
                     <div className="paleSalmon p-2">
