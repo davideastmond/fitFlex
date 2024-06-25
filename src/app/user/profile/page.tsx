@@ -26,6 +26,13 @@ export default function ProfilePage() {
     setUserNameFieldValue(session?.user?.username!);
   }, [session?.user?.username]);
 
+  const haveFieldValuesChanges = (): boolean => {
+    return (
+      session?.user?.username !== userNameFieldValue ||
+      password1FieldValue.trim() !== "" ||
+      password2FieldValue.trim() !== ""
+    );
+  };
   const handleSaveUserInfo = async () => {
     let fieldsToUpdate: Record<string, string> = {};
 
@@ -51,9 +58,8 @@ export default function ProfilePage() {
           password: password1FieldValue,
         };
       } catch (error: any) {
-        const passwordErrors = extractValidationErrors(error);
         setErrorMessage(
-          Object.values(passwordErrors)
+          Object.values(extractValidationErrors(error))
             .map((error) => error.message)
             .join(" ")
         );
@@ -179,11 +185,7 @@ export default function ProfilePage() {
             label="Update my Info"
             buttonClassNames="defaultButtonColor !justify-evenly"
             disabled={
-              isBusy ||
-              session?.user?.oAuth ||
-              (session?.user?.username === userNameFieldValue &&
-                userNameFieldValue?.trim() !== "" &&
-                password1FieldValue.trim() !== password2FieldValue.trim())
+              isBusy || session?.user?.oAuth || !haveFieldValuesChanges()
             }
           >
             {isBusy && <CircularProgress size={30} sx={{ color: "white" }} />}
