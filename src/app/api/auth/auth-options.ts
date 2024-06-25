@@ -34,18 +34,26 @@ export const authOptions: NextAuthOptions = {
 
       return true;
     },
-    async jwt({ token }) {
+    async jwt({ token, trigger }) {
       await dbConnect();
 
       const userSession = await UserRepository.findOne({
         email: token.email,
       }).select("-password");
 
+      if (trigger === "update") {
+        token = {
+          ...token,
+          username: userSession?.username,
+        };
+      }
+
       // We can decide what element we want to include in the token
       token = {
         ...token,
         _id: userSession?._id.toString(),
         username: userSession?.username,
+        oAuth: userSession?.oAuth,
       };
 
       return token;
@@ -57,6 +65,7 @@ export const authOptions: NextAuthOptions = {
           username: token.username as string,
           email: token.email as string,
           _id: token._id as string,
+          oAuth: token.oAuth as boolean,
         } as any,
       };
 
@@ -100,6 +109,7 @@ export const authOptions: NextAuthOptions = {
             _id: user._id.toString(),
             email: user.email,
             username: user.username,
+            oAuth: user.oAuth,
           } as any;
         } else {
           console.log("Invalid Password");

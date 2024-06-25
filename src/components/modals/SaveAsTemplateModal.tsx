@@ -1,8 +1,11 @@
 import { LoggingClient } from "@/app/clients/logging-client/logging-client";
 import { useAuthSession } from "@/lib/contexts/auth-context/auth-context";
+import { ExerciseEnum } from "@/lib/exercises/exercise-enum";
+import { ExercisesDictionary } from "@/lib/exercises/exercises-dictionary";
 import { ExerciseActivity } from "@/models/exercise-activity.model";
 import { CircularProgress, Modal } from "@mui/material";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
 import { BasicRoundedButton } from "../buttons/basic-rounded-button/Basic-rounded-button";
@@ -46,7 +49,10 @@ const SaveAsTemplateModal: React.FC<SaveAsTemplateModalProps> = ({
           name: templateName,
           exercises: data.map((exerciseActivity) => {
             return {
-              exerciseName: exerciseActivity.exerciseName,
+              exerciseName:
+                ExercisesDictionary[
+                  exerciseActivity.exerciseName as ExerciseEnum
+                ].name,
               sets: exerciseActivity.sets.map((set, index) => {
                 return {
                   setNumber: index + 1,
@@ -143,7 +149,9 @@ const SaveAsTemplateModal: React.FC<SaveAsTemplateModalProps> = ({
                   >
                     <div className="flex justify-between items-center mb-1 defaultButtonColor p-2">
                       <p className="text-white verdanaFont">
-                        {exercise.exerciseName}
+                        {ExercisesDictionary[
+                          exercise.exerciseName as ExerciseEnum
+                        ].label || exercise.exerciseName}
                       </p>
                     </div>
                     <div className="paleSalmon p-2">
@@ -171,7 +179,35 @@ const SaveAsTemplateModal: React.FC<SaveAsTemplateModalProps> = ({
           </motion.div>
         </motion.div>
       </Modal>
-      <SuccessModal open={isModalOpen} />
+      <SuccessModal
+        open={isModalOpen}
+        message="Your exercise template has been saved successfully. You can now re-use this template to log your exercises next time!"
+        buttonActions={
+          <>
+            <Link href={"/user/home"} onClick={() => setIsLoading(true)}>
+              <BasicRoundedButton
+                label="Return To Home"
+                buttonClassNames="whiteButton"
+              >
+                {isLoading && (
+                  <CircularProgress size={30} sx={{ color: "var(--orange)" }} />
+                )}
+              </BasicRoundedButton>
+              ,
+            </Link>
+            <Link href={"/user/mytemplates"} onClick={() => setIsLoading(true)}>
+              <BasicRoundedButton
+                label="View Templates"
+                buttonClassNames="defaultButtonColor"
+              >
+                {isLoading && (
+                  <CircularProgress size={30} sx={{ color: "white" }} />
+                )}
+              </BasicRoundedButton>
+            </Link>
+          </>
+        }
+      />
     </div>
   );
 };

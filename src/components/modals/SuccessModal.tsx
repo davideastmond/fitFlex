@@ -1,15 +1,19 @@
 import { Modal } from "@mui/material";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import { BasicRoundedButton } from "../buttons/basic-rounded-button/Basic-rounded-button";
 
 interface SuccessModalProps {
   open: boolean;
+  message: string;
+  buttonActions: JSX.Element;
 }
 
-const SuccessModal: React.FC<SuccessModalProps> = ({ open }) => {
+const SuccessModal: React.FC<SuccessModalProps> = ({
+  open,
+  message,
+  buttonActions,
+}) => {
   return (
     <Modal open={open} className="modalOuterContainer">
       <motion.div
@@ -31,24 +35,10 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ open }) => {
             <h1 className="text-xl verdanaFont text-center darkCharcoal">
               SUCCESS!
             </h1>
-            <h3 className="robotoFont text-sm m-6 text-gray-500">
-              Your exercise template has been saved successfully. You can now
-              re-use this template to log your exercises next time!
-            </h3>
+            <h3 className="robotoFont text-sm m-6 text-gray-500">{message}</h3>
           </div>
           <div className="mt-2 flex flex-col gap-4 px-4 items-center">
-            <Link href={"/user/home"}>
-              <BasicRoundedButton
-                label="Return To Home"
-                buttonClassNames="whiteButton"
-              />
-            </Link>
-            <Link href={"/user/mytemplates"}>
-              <BasicRoundedButton
-                label="View Templates"
-                buttonClassNames="defaultButtonColor"
-              />
-            </Link>
+            {buttonActions}
           </div>
         </div>
       </motion.div>

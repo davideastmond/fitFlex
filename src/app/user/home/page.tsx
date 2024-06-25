@@ -1,13 +1,15 @@
 "use client";
+import { ExercisesClient } from "@/app/clients/exercises-client/exercises-client";
 import { BasicRoundedButton } from "@/components/buttons/basic-rounded-button/Basic-rounded-button";
 import { CalendarLogViewer } from "@/components/calendar-log-viewer/Calendar-log-viewer";
+import { FavoriteExerciseBySetsWidget } from "@/components/stats/widgets/favorite-exercise/FavoriteExerciseBySetsWidget";
 import { useAuthSession } from "@/lib/contexts/auth-context/auth-context";
 import { CircularProgress, Link } from "@mui/material";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LandingPage() {
   const { status, session } = useAuthSession();
@@ -18,6 +20,22 @@ export default function LandingPage() {
     useState<boolean>(false);
   const [isPageLoadingStartViewLogs, setIsPageLoadingViewLogs] =
     useState<boolean>(false);
+
+  const [popularExerciseBySetsData, setPopularExerciseBySetsData] =
+    useState<Record<string, number> | null>(null);
+
+  useEffect(() => {
+    fetchPopularExerciseBySets();
+  }, []);
+
+  const fetchPopularExerciseBySets = async () => {
+    try {
+      const res = await ExercisesClient.getActivitiesByTotalSets();
+      setPopularExerciseBySetsData(res.data);
+    } catch (error) {
+      console.error("Error fetching popular exercise by sets", error);
+    }
+  };
 
   // Users who are not authenticated will be redirected to the sign in page.
   if (status === "unauthenticated") {
@@ -41,13 +59,13 @@ export default function LandingPage() {
       >
         <div className="flex gap-4">
           <h1
-            className={`text-xl leading-7 openSansFont font-bold uppercase self-center py-6`}
+            className={`text-xl leading-7 openSansFont font-bold uppercase self-center py-6 px-2`}
           >
             Welcome, {session?.user?.username}
           </h1>
           <Link
             href="/user/mytemplates"
-            className="self-center "
+            className="self-center pr-2"
             onClick={() => setIsPageLoadingTemplates(true)}
           >
             <BasicRoundedButton
@@ -73,12 +91,16 @@ export default function LandingPage() {
         </div>
 
         <div>
-          <h3 className="verdanaFont text-sm leading-4">
+          <h3 className="verdanaFont text-sm leading-4 px-2">
             {dayjs().format("ddd, MMMM D, YYYY")}
           </h3>
         </div>
       </motion.div>
-
+      {popularExerciseBySetsData && (
+        <div className="mt-4 mb-4">
+          <FavoriteExerciseBySetsWidget data={popularExerciseBySetsData} />
+        </div>
+      )}
       {/* Logging Button */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
