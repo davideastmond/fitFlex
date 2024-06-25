@@ -184,18 +184,26 @@ const SaveAsTemplateModal: React.FC<SaveAsTemplateModalProps> = ({
         message="Your exercise template has been saved successfully. You can now re-use this template to log your exercises next time!"
         buttonActions={
           <>
-            <Link href={"/user/home"}>
+            <Link href={"/user/home"} onClick={() => setIsLoading(true)}>
               <BasicRoundedButton
                 label="Return To Home"
                 buttonClassNames="whiteButton"
-              />
+              >
+                {isLoading && (
+                  <CircularProgress size={30} sx={{ color: "var(--orange)" }} />
+                )}
+              </BasicRoundedButton>
               ,
             </Link>
-            <Link href={"/user/mytemplates"}>
+            <Link href={"/user/mytemplates"} onClick={() => setIsLoading(true)}>
               <BasicRoundedButton
                 label="View Templates"
                 buttonClassNames="defaultButtonColor"
-              />
+              >
+                {isLoading && (
+                  <CircularProgress size={30} sx={{ color: "white" }} />
+                )}
+              </BasicRoundedButton>
             </Link>
           </>
         }
