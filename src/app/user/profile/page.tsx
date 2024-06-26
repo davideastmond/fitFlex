@@ -114,7 +114,7 @@ export default function ProfilePage() {
       <div className="w-full">
         {session?.user?.oAuth && (
           <div>
-            <h1 className="mt-4 text-center text-md  openSansFont self-center text-blue-600">
+            <h1 className="mt-4 text-center text-sm openSansFont self-center text-blue-600">
               Note: these values are not editable because you signed with a 3rd
               party provider.
             </h1>
