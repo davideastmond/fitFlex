@@ -12,6 +12,7 @@ import { Exercise } from "@/lib/exercises/exercise";
 import { ExerciseEnum } from "@/lib/exercises/exercise-enum";
 import { ExercisesDictionary } from "@/lib/exercises/exercises-dictionary";
 import { ExerciseActivity } from "@/models/exercise-activity.model";
+import { Log } from "@/models/log.model";
 import { Set } from "@/models/set.model";
 import AddIcon from "@mui/icons-material/Add";
 import { CircularProgress, IconButton } from "@mui/material";
@@ -37,9 +38,9 @@ export default function CreateLog() {
   const [selectedExercises, setSelectedExercises] = useState<
     ExerciseActivity[]
   >([]);
-  const [selectedTemplateData, setSelectedTemplateData] = useState<
-    ExerciseActivity[] | null
-  >(null);
+  const [selectedTemplateData, setSelectedTemplateData] = useState<Log | null>(
+    null
+  );
   const [unit, setUnit] = useState<string>("lbs");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isTemplateModalOpen, setIsTemplateModalOpen] =
@@ -149,13 +150,13 @@ export default function CreateLog() {
 
   // -------------- Set Template Data from Modal to Generate Logs ----------------------
 
-  const handleTemplateSelection = (templateData: ExerciseActivity[] | null) => {
+  const handleTemplateSelection = (templateData: Log | null) => {
     setSelectedTemplateData(templateData);
   };
 
   const handleSetTemplates = () => {
     if (selectedTemplateData) {
-      setSelectedExercises(selectedTemplateData);
+      setSelectedExercises(selectedTemplateData.exercises);
     }
     setIsTemplateModalOpen(false);
   };
