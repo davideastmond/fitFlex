@@ -4,10 +4,11 @@ import { BasicRoundedButton } from "@/components/buttons/basic-rounded-button/Ba
 import { CalendarLogViewer } from "@/components/calendar-log-viewer/Calendar-log-viewer";
 import { FavoriteExerciseBySetsWidget } from "@/components/stats/widgets/favorite-exercise/FavoriteExerciseBySetsWidget";
 import { useAuthSession } from "@/lib/contexts/auth-context/auth-context";
-import { CircularProgress, Link } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import dayjs from "dayjs";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -67,6 +68,7 @@ export default function LandingPage() {
             href="/user/mytemplates"
             className="self-center pr-2"
             onClick={() => setIsPageLoadingTemplates(true)}
+            aria-disabled={isPageLoadingTemplates}
           >
             <BasicRoundedButton
               label="Manage Templates"
