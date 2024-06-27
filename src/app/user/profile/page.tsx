@@ -1,6 +1,7 @@
 "use client";
 import { UserClient } from "@/app/clients/user-client/user-client";
 import { passwordValidator } from "@/app/validators/password/password.validator";
+import { usernameValidator } from "@/app/validators/user/profile/username-validator";
 import { extractValidationErrors } from "@/app/validators/utils/extract-validation-errors/extract-validation-errors";
 import { BasicRoundedButton } from "@/components/buttons/basic-rounded-button/Basic-rounded-button";
 import SuccessModal from "@/components/modals/SuccessModal";
@@ -37,8 +38,20 @@ export default function ProfilePage() {
     let fieldsToUpdate: Record<string, string> = {};
 
     setErrorMessage(null);
-    if (!userNameFieldValue || userNameFieldValue.trim() === "") {
-      setErrorMessage("The username field can't be empty.");
+
+    try {
+      await usernameValidator.validate(
+        {
+          username: userNameFieldValue,
+        },
+        { abortEarly: false }
+      );
+    } catch (error: any) {
+      setErrorMessage(
+        Object.values(extractValidationErrors(error))
+          .map((error) => error.message)
+          .join(" ")
+      );
       return;
     }
 
