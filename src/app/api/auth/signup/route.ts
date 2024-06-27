@@ -1,3 +1,4 @@
+import { signupRouteValidator } from "@/app/validators/signup/signup-route.validator";
 import dbConnect from "@/lib/mongodb/mongodb";
 import { UserRepository } from "@/schemas/user.schema";
 import bcrypt from "bcrypt";
@@ -7,7 +8,12 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const requestBody = await req.json();
 
-  // TODO: here we can use yup to validate the request body
+  // Validate the request body
+  try {
+    await signupRouteValidator.validate(requestBody, { abortEarly: false });
+  } catch (e: any) {
+    return NextResponse.json(e, { status: 400 });
+  }
 
   const { email, password, username } = requestBody;
 
