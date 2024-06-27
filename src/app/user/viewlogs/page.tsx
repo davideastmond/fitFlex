@@ -2,7 +2,6 @@
 import { ExercisesClient } from "@/app/clients/exercises-client/exercises-client";
 import { CalendarLogViewer } from "@/components/calendar-log-viewer/Calendar-log-viewer";
 import { useAuthSession } from "@/lib/contexts/auth-context/auth-context";
-import { ExerciseEnum } from "@/lib/exercises/exercise-enum";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,22 +17,8 @@ export default function ViewLogs() {
   }
 
   useEffect(() => {
-    // testFetchExerciseData();
-    // getTally();
     getExercisesByTotalSets();
   }, []);
-
-  const testFetchExerciseData = async () => {
-    const data = await ExercisesClient.getActivitiesByExerciseName(
-      ExerciseEnum.Squat
-    );
-    console.log(data);
-  };
-
-  const getTally = async () => {
-    const data = await ExercisesClient.getBasicTally();
-    console.log(data);
-  };
 
   const getExercisesByTotalSets = async () => {
     const data = await ExercisesClient.getActivitiesByTotalSets();
