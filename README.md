@@ -8,7 +8,13 @@ It is a mobile-first web application that helps individuals who are interested i
 
 ## Features
 
-- User Accounts (email/Google account)
+### User Accounts
+
+- User Accounts (email credentials/Google account)
+- Credentialed users can update their username and password
+
+### Logging and Log Templates
+
 - Create a log from scratch
 - Create a log from templates
 - Unit conversion for logging
@@ -16,6 +22,10 @@ It is a mobile-first web application that helps individuals who are interested i
 - Save logs as templates
 - Templates management
 - Logs view in calendar
+
+### Stats
+
+- Various stat widgets are being developed
 
 ## Screenshots
 

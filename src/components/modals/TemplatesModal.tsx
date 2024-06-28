@@ -1,5 +1,4 @@
 import { LoggingClient } from "@/app/clients/logging-client/logging-client";
-import { ExerciseActivity } from "@/models/exercise-activity.model";
 import { Log } from "@/models/log.model";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { IconButton, Modal } from "@mui/material";
@@ -13,7 +12,7 @@ interface TemplateModalProps {
   open: boolean;
   onClose: () => void;
   onGenerate: () => void;
-  onTemplateSelect: (template: ExerciseActivity[] | null) => void;
+  onTemplateSelect: (template: Log | null) => void;
 }
 
 const TemplatesModal: React.FC<TemplateModalProps> = ({
@@ -22,9 +21,7 @@ const TemplatesModal: React.FC<TemplateModalProps> = ({
   onGenerate,
   onTemplateSelect,
 }) => {
-  const [selectedTemplate, setSelectedTemplate] = useState<
-    ExerciseActivity[] | null
-  >(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<Log | null>(null);
   const [activeTemplateIdx, setActiveTemplateIdx] = useState<number | null>(
     null
   );
@@ -45,7 +42,7 @@ const TemplatesModal: React.FC<TemplateModalProps> = ({
     }
   };
 
-  const handleTemplateClick = (template: ExerciseActivity[], idx: number) => {
+  const handleTemplateClick = (template: Log, idx: number) => {
     setSelectedTemplate(template);
     onTemplateSelect(template);
     setActiveTemplateIdx(idx);
@@ -91,7 +88,7 @@ const TemplatesModal: React.FC<TemplateModalProps> = ({
                         ? "defaultButtonColor colorWhite"
                         : ""
                     }`}
-                    onClick={() => handleTemplateClick(template.exercises, idx)} // this should send a whole log instead of exercises
+                    onClick={() => handleTemplateClick(template, idx)} // this should send a whole log instead of exercises
                   >
                     <div
                       className={`text-base font-light leading-6 verdanaFont self-center ${
@@ -126,7 +123,7 @@ const TemplatesModal: React.FC<TemplateModalProps> = ({
       <TemplateDataModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        exerciseData={selectedTemplate}
+        templateLogData={selectedTemplate}
       />
     </div>
   );

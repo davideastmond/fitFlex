@@ -9,7 +9,7 @@ export default function AuthenticatedUserLayout({
   return (
     <div>
       <AppMenuBar />
-      <div className="flex flex-grow justify-center">{children}</div>
+      <div className="flex flex-grow justify-center mt-8">{children}</div>
     </div>
   );
 }
