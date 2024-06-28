@@ -1,6 +1,6 @@
 import { ExerciseEnum } from "@/lib/exercises/exercise-enum";
 import { ExercisesDictionary } from "@/lib/exercises/exercises-dictionary";
-import { ExerciseActivity } from "@/models/exercise-activity.model";
+import { Log } from "@/models/log.model";
 import { Modal } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
@@ -10,13 +10,13 @@ import { BasicRoundedButton } from "../buttons/basic-rounded-button/Basic-rounde
 interface TemplateDataModalProps {
   open: boolean;
   onClose: () => void;
-  exerciseData: ExerciseActivity[] | null; // TODO: I think we should be passing a log instead of exercise activities here
+  templateLogData: Log | null; // TODO: I think we should be passing a log instead of exercise activities here
 }
 
 const TemplateDataModal: React.FC<TemplateDataModalProps> = ({
   open,
   onClose,
-  exerciseData,
+  templateLogData,
 }) => {
   return (
     <Modal open={open} onClose={onClose} className="modalOuterContainer">
@@ -28,12 +28,12 @@ const TemplateDataModal: React.FC<TemplateDataModalProps> = ({
         className="modalInnerContainer modalBgColor relative items-center"
       >
         {/* Templates to Choose From */}
-        {exerciseData !== null ? (
+        {templateLogData !== null ? (
           <div className="w-full p-4">
             <div className="flex justify-between mb-4 items-center">
               {/* TODO: For Exercise list we should have access to the log.name (template Name) */}
               <h2 className="openSansFont leading-7 text-2xl font-medium">
-                Exercise List
+                {templateLogData.name || "Unnamed Template"}
               </h2>
               <button
                 onClick={onClose}
@@ -45,7 +45,7 @@ const TemplateDataModal: React.FC<TemplateDataModalProps> = ({
             {/* Exercise Activity */}
             <div className="max-h-96 overflow-y-auto overflow-hidden">
               <AnimatePresence>
-                {exerciseData.map((exercise, eIdx) => (
+                {templateLogData.exercises.map((exercise, eIdx) => (
                   <motion.div
                     key={(exercise as any).id}
                     initial={{ opacity: 0, y: 20 }}

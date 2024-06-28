@@ -15,7 +15,7 @@ export function AppMenuBar() {
 
   return (
     <div className="grow">
-      <AppBar position="static" className="defaultButtonColor">
+      <AppBar position="fixed" className="defaultButtonColor">
         <Toolbar>
           <IconButton
             size="large"
