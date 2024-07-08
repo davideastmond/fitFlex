@@ -74,6 +74,7 @@ export default function SignupForm() {
 
     // If there was no error, sign the user in using the isRegistering flag
     try {
+      setIsLoading(true);
       await AuthClient.signInUser({
         email: formFieldValues.email,
         password: formFieldValues.password1,
@@ -82,7 +83,6 @@ export default function SignupForm() {
       });
     } catch (error: any) {
       setAppError({ error: true, message: error });
-    } finally {
       setIsLoading(false);
     }
   };
