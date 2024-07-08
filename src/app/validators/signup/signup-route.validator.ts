@@ -6,8 +6,7 @@ export const signupRouteValidator = object({
     .required("Username is required")
     .min(2, "Username must be at least 2 characters")
     .max(50, "Username must be at most 50 characters"),
-  signupPasswordValidator,
   email: string()
     .email("Email must be a valid email")
     .required("Email is required"),
-});
+}).concat(signupPasswordValidator);
